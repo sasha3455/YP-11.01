@@ -5,6 +5,14 @@
 {% block content %}
 <div class="page-content">
     <h1>Отзыв на «{{ review.clothes.name }}»</h1>
+    <p style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="{% url 'review_edit' review.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
+            Редактировать
+        </a>
+        <a href="{% url 'review_delete' review.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #b00020;background:#b00020;color:#fff;border-radius:6px;text-decoration:none;">
+            Удалить
+        </a>
+    </p>
     <p><strong>Товар:</strong> <a href="{% url 'product_detail' review.clothes.pk %}">{{ review.clothes.name }}</a></p>
     <p><strong>Покупатель:</strong> <a href="{% url 'customer_detail' review.customer.pk %}">{{ review.customer }}</a></p>
     <p><strong>Оценка:</strong> {{ review.rating }}/5</p>

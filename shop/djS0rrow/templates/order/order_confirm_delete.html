@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление заказа — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Удалить заказ №{{ object.pk }}?</h1>
+    <p>Позиции заказа будут удалены вместе с заказом.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" style="padding:10px 14px;border:1px solid #b00020;background:#b00020;color:#fff;border-radius:6px;">
+            Удалить
+        </button>
+        <a href="{% url 'order_detail' object.pk %}" style="margin-left:12px;">Отмена</a>
+    </form>
+</div>
+{% endblock %}
+

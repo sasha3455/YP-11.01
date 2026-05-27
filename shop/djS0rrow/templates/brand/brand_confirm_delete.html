@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление бренда — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Удалить бренд «{{ object.name }}»?</h1>
+    <p>У товаров этого бренда поле «Бренд» станет пустым.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" style="padding:10px 14px;border:1px solid #b00020;background:#b00020;color:#fff;border-radius:6px;">
+            Удалить
+        </button>
+        <a href="{% url 'brand_detail' object.pk %}" style="margin-left:12px;">Отмена</a>
+    </form>
+</div>
+{% endblock %}
+

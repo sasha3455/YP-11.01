@@ -5,9 +5,22 @@
 {% block content %}
 <div class="page-content">
     <h1>Покупатели</h1>
+    <p>
+        <a href="{% url 'customer_add' %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
+            + Добавить покупателя
+        </a>
+    </p>
     <ul class="db-list">
         {% for customer in customers %}
-        <li><a href="{% url 'customer_detail' customer.pk %}">{{ customer.last_name }} {{ customer.first_name }}</a> — {{ customer.email }}</li>
+        <li>
+            <a href="{% url 'customer_detail' customer.pk %}">{{ customer.last_name }} {{ customer.first_name }}</a> — {{ customer.email }}
+            <span style="margin-left:10px;">
+                <a href="{% url 'customer_edit' customer.pk %}">Редактировать</a>
+                {% if not customer.order_set.exists %}
+                    <a href="{% url 'customer_delete' customer.pk %}" style="margin-left:10px;color:#b00020;">Удалить</a>
+                {% endif %}
+            </span>
+        </li>
         {% empty %}
         <li>Нет записей</li>
         {% endfor %}

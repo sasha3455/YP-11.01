@@ -5,11 +5,20 @@
 {% block content %}
 <div class="page-content">
     <h1>Отзывы</h1>
+    <p>
+        <a href="{% url 'review_add' %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
+            + Добавить отзыв
+        </a>
+    </p>
     <ul class="db-list">
         {% for review in reviews %}
         <li>
             <a href="{% url 'review_detail' review.pk %}">{{ review.clothes.name }}</a>
             — {{ review.rating }}/5 — {{ review.customer }}
+            <span style="margin-left:10px;">
+                <a href="{% url 'review_edit' review.pk %}">Редактировать</a>
+                <a href="{% url 'review_delete' review.pk %}" style="margin-left:10px;color:#b00020;">Удалить</a>
+            </span>
         </li>
         {% empty %}
         <li>Нет записей</li>

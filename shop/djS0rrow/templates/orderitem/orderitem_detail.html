@@ -5,6 +5,14 @@
 {% block content %}
 <div class="page-content">
     <h1>Позиция заказа №{{ order_item.pk }}</h1>
+    <p style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="{% url 'order_item_edit' order_item.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
+            Редактировать
+        </a>
+        <a href="{% url 'order_item_delete' order_item.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #b00020;background:#b00020;color:#fff;border-radius:6px;text-decoration:none;">
+            Удалить
+        </a>
+    </p>
     <p><strong>Заказ:</strong> <a href="{% url 'order_detail' order_item.order.pk %}">№{{ order_item.order.pk }}</a></p>
     <p><strong>Товар:</strong> <a href="{% url 'product_detail' order_item.clothes.pk %}">{{ order_item.clothes.name }}</a></p>
     <p><strong>Количество:</strong> {{ order_item.quantity }}</p>

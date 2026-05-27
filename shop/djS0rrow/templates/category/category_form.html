@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}Редактирование категории{% else %}Добавление категории{% endif %} — Grailed
+{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>{% if form.instance.pk %}Редактирование категории{% else %}Добавление категории{% endif %}</h1>
+    <form method="post" style="max-width:520px;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" style="padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;">
+            Сохранить
+        </button>
+        {% if form.instance.pk %}
+            <a href="{% url 'category_detail' form.instance.pk %}" style="margin-left:12px;">Отмена</a>
+        {% else %}
+            <a href="{% url 'category_list' %}" style="margin-left:12px;">Отмена</a>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}
+

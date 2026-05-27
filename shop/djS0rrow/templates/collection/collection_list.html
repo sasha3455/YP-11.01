@@ -5,9 +5,20 @@
 {% block content %}
 <div class="page-content">
     <h1>Коллекции</h1>
+    <p>
+        <a href="{% url 'collection_add' %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
+            + Добавить коллекцию
+        </a>
+    </p>
     <ul class="db-list">
         {% for collection in collections %}
-        <li><a href="{% url 'collection_detail' collection.pk %}">{{ collection.name }}</a>{% if collection.season %} — {{ collection.season }}{% endif %}</li>
+        <li>
+            <a href="{% url 'collection_detail' collection.pk %}">{{ collection.name }}</a>{% if collection.season %} — {{ collection.season }}{% endif %}
+            <span style="margin-left:10px;">
+                <a href="{% url 'collection_edit' collection.pk %}">Редактировать</a>
+                <a href="{% url 'collection_delete' collection.pk %}" style="margin-left:10px;color:#b00020;">Удалить</a>
+            </span>
+        </li>
         {% empty %}
         <li>Нет записей</li>
         {% endfor %}

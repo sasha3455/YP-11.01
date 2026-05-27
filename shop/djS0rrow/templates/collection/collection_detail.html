@@ -5,6 +5,14 @@
 {% block content %}
 <div class="page-content">
     <h1>{{ collection.name }}</h1>
+    <p style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="{% url 'collection_edit' collection.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
+            Редактировать
+        </a>
+        <a href="{% url 'collection_delete' collection.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #b00020;background:#b00020;color:#fff;border-radius:6px;text-decoration:none;">
+            Удалить
+        </a>
+    </p>
     <p>{{ collection.description }}</p>
     {% if collection.season %}<p><strong>Сезон:</strong> {{ collection.season }}</p>{% endif %}
     <h2>Товары коллекции</h2>

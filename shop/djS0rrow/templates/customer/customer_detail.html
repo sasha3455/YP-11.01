@@ -5,6 +5,16 @@
 {% block content %}
 <div class="page-content">
     <h1>{{ customer.last_name }} {{ customer.first_name }}</h1>
+    <p style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="{% url 'customer_edit' customer.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
+            Редактировать
+        </a>
+        {% if not customer.order_set.exists %}
+            <a href="{% url 'customer_delete' customer.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #b00020;background:#b00020;color:#fff;border-radius:6px;text-decoration:none;">
+                Удалить
+            </a>
+        {% endif %}
+    </p>
     <p><strong>Email:</strong> {{ customer.email }}</p>
     {% if customer.phone %}<p><strong>Телефон:</strong> {{ customer.phone }}</p>{% endif %}
     <h2>Заказы</h2>

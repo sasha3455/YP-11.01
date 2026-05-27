@@ -42,6 +42,12 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInline]
 
 
+@admin.register(OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'order', 'clothes', 'quantity', 'price_at_order')
+    list_filter = ('order',)
+
+
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('clothes', 'customer', 'rating', 'created_at')

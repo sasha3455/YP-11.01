@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление позиции заказа — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Удалить позицию заказа №{{ object.pk }}?</h1>
+    <p>Товар: {{ object.clothes.name }} · Заказ №{{ object.order.pk }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" style="padding:10px 14px;border:1px solid #b00020;background:#b00020;color:#fff;border-radius:6px;">
+            Удалить
+        </button>
+        <a href="{% url 'order_item_detail' object.pk %}" style="margin-left:12px;">Отмена</a>
+    </form>
+</div>
+{% endblock %}
+
