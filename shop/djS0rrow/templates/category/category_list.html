@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Категории — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Категории</h1>
+    <ul class="db-list">
+        {% for category in categories %}
+        <li><a href="{% url 'category_detail' category.pk %}">{{ category.name }}</a></li>
+        {% empty %}
+        <li>Нет записей</li>
+        {% endfor %}
+    </ul>
+    <a class="back-link" href="{% url 'home' %}">← На главную</a>
+</div>
+{% endblock %}

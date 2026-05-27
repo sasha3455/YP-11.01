@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Корзина — Grailed{% endblock %}
+
+{% block content %}
+<section class="page-content static-page">
+    <p class="tagline">Cart</p>
+    <h1>Корзина</h1>
+    <p class="lead">Здесь отображаются выбранные товары перед оформлением заказа.</p>
+
+    <div class="cart-demo info-card">
+        <div class="cart-row">
+            <div>
+                <p class="item-name">Basic Double Hoodie</p>
+                <p class="item-meta">Продавец: Dan4DoTheShit · Размер: XL</p>
+            </div>
+            <span class="item-price">84 $</span>
+        </div>
+        <div class="cart-row">
+            <div>
+                <p class="item-name">Shorty Cargo Pants</p>
+                <p class="item-meta">Продавец: 7.ohn.doe.lab · Размер: ONE SIZE</p>
+            </div>
+            <span class="item-price">47 $</span>
+        </div>
+
+        <div class="cart-total">
+            <span>Итого (2 товара)</span>
+            <span>131 $</span>
+        </div>
+
+        <button type="button" class="checkout-btn" disabled>Оформить заказ</button>
+
+        <p class="demo-note">
+            Это демонстрационная вёрстка корзины. Реальные товары из базы данных на этой странице появятся на следующем этапе задания.
+        </p>
+    </div>
+
+    <div class="quick-links">
+        <a href="{% url 'product_list' %}">Продолжить покупки</a>
+        <a href="{% url 'home' %}">На главную</a>
+    </div>
+</section>
+{% endblock %}

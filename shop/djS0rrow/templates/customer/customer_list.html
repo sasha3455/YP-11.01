@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Покупатели — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Покупатели</h1>
+    <ul class="db-list">
+        {% for customer in customers %}
+        <li><a href="{% url 'customer_detail' customer.pk %}">{{ customer.last_name }} {{ customer.first_name }}</a> — {{ customer.email }}</li>
+        {% empty %}
+        <li>Нет записей</li>
+        {% endfor %}
+    </ul>
+    <a class="back-link" href="{% url 'home' %}">← На главную</a>
+</div>
+{% endblock %}

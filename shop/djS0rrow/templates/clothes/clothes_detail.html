@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ clothes.name }} — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>{{ clothes.name }}</h1>
+
+    {% if clothes.photo %}
+        <img class="detail-photo" src="{{ clothes.photo.url }}" alt="{{ clothes.name }}">
+    {% endif %}
+
+    <p>{{ clothes.description }}</p>
+    <p><strong>Цена:</strong> {{ clothes.price }} ₽</p>
+    <p><strong>Размер:</strong> {{ clothes.size }}</p>
+    <p><strong>Цвет:</strong> {{ clothes.color }}</p>
+    <p><strong>Доступность:</strong> {% if clothes.is_exists %}Да{% else %}Нет{% endif %}</p>
+    <p><strong>Категория:</strong> <a href="{% url 'category_detail' clothes.category.pk %}">{{ clothes.category }}</a></p>
+    {% if clothes.brand %}
+        <p><strong>Бренд:</strong> <a href="{% url 'brand_detail' clothes.brand.pk %}">{{ clothes.brand }}</a></p>
+    {% endif %}
+    <p><strong>Коллекции:</strong>
+        {% for collection in clothes.collection.all %}
+            <a href="{% url 'collection_detail' collection.pk %}">{{ collection.name }}</a>{% if not forloop.last %}, {% endif %}
+        {% empty %}
+            —
+        {% endfor %}
+    </p>
+    <p><strong>Добавлено:</strong> {{ clothes.create_date|date:"d.m.Y H:i" }}</p>
+
+    <a class="back-link" href="{% url 'product_list' %}">← Вернуться к списку товаров</a>
+</div>
+{% endblock %}

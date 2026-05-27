@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Товары — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Доступная одежда</h1>
+
+    <div class="product-cards">
+        {% for item in clothes %}
+        <article class="product-card">
+            <a href="{% url 'product_detail' item.pk %}">
+                {% if item.photo %}
+                    <img src="{{ item.photo.url }}" alt="{{ item.name }}">
+                {% else %}
+                    <div style="height:140px;background:#eee;display:flex;align-items:center;justify-content:center;">Нет фото</div>
+                {% endif %}
+                <h3>{{ item.name }}</h3>
+                <p>{{ item.price }} ₽</p>
+                <p>Размер: {{ item.size }} · {{ item.color }}</p>
+                {% if item.brand %}<p>{{ item.brand.name }}</p>{% endif %}
+            </a>
+        </article>
+        {% empty %}
+        <p>Пока нет товаров в каталоге.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta charset="utf-8" />
+    <title>{% block title %}Grailed{% endblock %}</title>
+    <link rel="stylesheet" href="globals.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .site-header { padding: 12px 16px; border-bottom: 1px solid #ddd; margin-bottom: 16px; }
+        .site-header nav a { margin-right: 16px; text-decoration: none; color: inherit; }
+        .site-header nav a:hover { text-decoration: underline; }
+        .product-cards { display: flex; flex-wrap: wrap; gap: 16px; padding: 0 16px 24px; }
+        .product-card { width: 160px; border: 1px solid #eee; padding: 8px; }
+        .product-card img { width: 100%; height: 140px; object-fit: cover; }
+        .db-list { padding: 0 16px 24px; list-style: none; }
+        .db-list li { margin-bottom: 8px; }
+        .page-content { padding: 0 16px 80px; }
+        .detail-photo {
+            display: block;
+            max-width: 100%;
+            width: auto;
+            max-height: 420px;
+            height: auto;
+            margin: 12px 0 20px;
+            border-radius: 6px;
+            object-fit: contain;
+        }
+        .back-link { display: inline-block; margin-top: 16px; }
+
+        /* Статические страницы (главная, о компании, корзина) */
+        .static-page { max-width: 520px; margin: 0 auto; padding: 8px 16px 80px; line-height: 1.5; }
+        .static-page h1 { font-size: 1.5rem; margin: 0 0 12px; letter-spacing: 0.02em; }
+        .static-page h2 { font-size: 1.1rem; margin: 24px 0 8px; }
+        .static-page p { margin: 0 0 10px; color: #333; }
+        .static-page .tagline { font-size: 0.85rem; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+        .static-page .brand-mark { font-size: 2rem; font-weight: 700; margin: 0 0 4px; }
+        .static-page .lead { font-size: 1.05rem; color: #222; margin-bottom: 16px; }
+        .static-page .muted { color: #666; font-size: 0.9rem; }
+        .static-page .info-card {
+            background: #f7f7f7;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+        .static-page .info-list { margin: 0; padding-left: 20px; }
+        .static-page .info-list li { margin-bottom: 6px; }
+        .static-page .quick-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        .static-page .quick-links a {
+            display: inline-block;
+            padding: 10px 14px;
+            border: 1px solid #222;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #111;
+            font-size: 0.9rem;
+        }
+        .static-page .quick-links a:hover { background: #111; color: #fff; }
+        .cart-demo { margin-top: 16px; }
+        .cart-demo .cart-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .cart-demo .cart-row:last-of-type { border-bottom: none; }
+        .cart-demo .item-name { font-weight: 600; margin: 0 0 4px; }
+        .cart-demo .item-meta { font-size: 0.85rem; color: #666; margin: 0; }
+        .cart-demo .item-price { font-weight: 600; white-space: nowrap; }
+        .cart-demo .cart-total {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 2px solid #222;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        .cart-demo .checkout-btn {
+            display: block;
+            width: 100%;
+            margin-top: 16px;
+            padding: 14px;
+            text-align: center;
+            background: #111;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            cursor: default;
+        }
+        .cart-demo .demo-note {
+            margin-top: 12px;
+            padding: 10px 12px;
+            background: #fffbe6;
+            border: 1px solid #f0e6a8;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #665c00;
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+<div class="iphone-pro">
+    <header class="site-header">
+        <nav>
+            <a href="{% url 'home' %}">Главная</a>
+            <a href="{% url 'info_view' %}">О компании</a>
+            <a href="{% url 'product_list' %}">Товары</a>
+            <a href="{% url 'cart_view' %}">Корзина</a>
+        </nav>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer class="footer">
+        <div class="frame"></div>
+        <div class="text-wrapper">EN</div>
+        <div class="div"></div>
+        <div class="text-wrapper-2">currency</div>
+        <div class="text-wrapper-3">TELEGRAMM</div>
+        <div class="text-wrapper-4">TIK TOK</div>
+        <div class="text-wrapper-5">INSTAGRAM</div>
+        <div class="granhetlmain"></div>
+    </footer>
+</div>
+</body>
+</html>

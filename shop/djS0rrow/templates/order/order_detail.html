@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Заказ №{{ order.pk }} — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Заказ №{{ order.pk }}</h1>
+    <p><strong>Покупатель:</strong> <a href="{% url 'customer_detail' order.customer.pk %}">{{ order.customer }}</a></p>
+    <p><strong>Дата:</strong> {{ order.order_date|date:"d.m.Y H:i" }}</p>
+    <p><strong>Статус:</strong> {{ order.get_status_display }}</p>
+    <p><strong>Сумма:</strong> {{ order.total_amount }} ₽</p>
+    <h2>Позиции</h2>
+    <ul class="db-list">
+        {% for item in order.items.all %}
+        <li>
+            <a href="{% url 'product_detail' item.clothes.pk %}">{{ item.clothes.name }}</a>
+            × {{ item.quantity }} — {{ item.price_at_order }} ₽
+        </li>
+        {% empty %}
+        <li>Нет позиций</li>
+        {% endfor %}
+    </ul>
+    <a class="back-link" href="{% url 'order_list' %}">← К списку заказов</a>
+</div>
+{% endblock %}

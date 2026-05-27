@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.sqlite3
+.DS_Store
+*.log
+
+shop/.env
+.env
+
+# Локальные копии загрузок вне MEDIA_ROOT (если остались)
+shop/image/

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ customer }} — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>{{ customer.last_name }} {{ customer.first_name }}</h1>
+    <p><strong>Email:</strong> {{ customer.email }}</p>
+    {% if customer.phone %}<p><strong>Телефон:</strong> {{ customer.phone }}</p>{% endif %}
+    <h2>Заказы</h2>
+    <ul class="db-list">
+        {% for order in customer.order_set.all %}
+        <li><a href="{% url 'order_detail' order.pk %}">Заказ №{{ order.pk }} — {{ order.total_amount }} ₽ ({{ order.get_status_display }})</a></li>
+        {% empty %}
+        <li>Нет заказов</li>
+        {% endfor %}
+    </ul>
+    <a class="back-link" href="{% url 'customer_list' %}">← К списку покупателей</a>
+</div>
+{% endblock %}

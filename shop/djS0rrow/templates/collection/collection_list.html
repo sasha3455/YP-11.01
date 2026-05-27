@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Коллекции — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Коллекции</h1>
+    <ul class="db-list">
+        {% for collection in collections %}
+        <li><a href="{% url 'collection_detail' collection.pk %}">{{ collection.name }}</a>{% if collection.season %} — {{ collection.season }}{% endif %}</li>
+        {% empty %}
+        <li>Нет записей</li>
+        {% endfor %}
+    </ul>
+    <a class="back-link" href="{% url 'home' %}">← На главную</a>
+</div>
+{% endblock %}

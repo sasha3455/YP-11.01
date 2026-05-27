@@ -1,0 +1,23 @@
+from django.urls import path
+
+from .views import BrandDetailView,BrandListView,CategoryDetailView,CategoryListView,ClothesDetailView,ClothesListView,CollectionDetailView, CollectionListView,  CustomerDetailView, CustomerListView,  OrderDetailView, OrderListView, ReviewDetailView,ReviewListView,  cart_view, home_view, info_view
+
+urlpatterns = [
+    path('', home_view, name='home'),
+    path('info/', info_view, name='info_view'),
+    path('products/', ClothesListView.as_view(), name='product_list'),
+    path('products/<int:pk>/', ClothesDetailView.as_view(), name='product_detail'),
+    path('cart/', cart_view, name='cart_view'),
+    path('categories/', CategoryListView.as_view(), name='category_list'),
+    path('categories/<int:pk>/', CategoryDetailView.as_view(), name='category_detail'),
+    path('collections/', CollectionListView.as_view(), name='collection_list'),
+    path('collections/<int:pk>/', CollectionDetailView.as_view(), name='collection_detail'),
+    path('brands/', BrandListView.as_view(), name='brand_list'),
+    path('brands/<int:pk>/', BrandDetailView.as_view(), name='brand_detail'),
+    path('customers/', CustomerListView.as_view(), name='customer_list'),
+    path('customers/<int:pk>/', CustomerDetailView.as_view(), name='customer_detail'),
+    path('orders/', OrderListView.as_view(), name='order_list'),
+    path('orders/<int:pk>/', OrderDetailView.as_view(), name='order_detail'),
+    path('reviews/', ReviewListView.as_view(), name='review_list'),
+    path('reviews/<int:pk>/', ReviewDetailView.as_view(), name='review_detail'),
+]

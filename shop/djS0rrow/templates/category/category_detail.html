@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category.name }} — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>{{ category.name }}</h1>
+    <p>{{ category.description }}</p>
+    <h2>Товары в категории</h2>
+    <ul class="db-list">
+        {% for item in category.clothes_set.all %}
+        <li><a href="{% url 'product_detail' item.pk %}">{{ item.name }} — {{ item.price }} ₽</a></li>
+        {% empty %}
+        <li>Нет товаров</li>
+        {% endfor %}
+    </ul>
+    <a class="back-link" href="{% url 'category_list' %}">← К списку категорий</a>
+</div>
+{% endblock %}

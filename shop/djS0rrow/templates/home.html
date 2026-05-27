@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная — Grailed{% endblock %}
+
+{% block content %}
+<section class="page-content static-page">
+    <p class="tagline">Grailed · MAIN</p>
+    <p class="brand-mark">LUDA</p>
+    <p class="muted">streetwear &amp; vintage</p>
+
+    <h1>Добро пожаловать</h1>
+    <p class="lead">Интернет-магазин одежды, обуви и аксессуаров — от базовых вещей до редких коллекционных позиций.</p>
+    <p>На сайте можно посмотреть каталог товаров из базы данных, узнать о магазине и перейти в корзину (пока только вёрстка).</p>
+
+    <div class="quick-links">
+        <a href="{% url 'product_list' %}">Смотреть товары</a>
+        <a href="{% url 'info_view' %}">О компании</a>
+        <a href="{% url 'cart_view' %}">Корзина</a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Бренды — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Бренды</h1>
+    <div class="product-cards">
+        {% for brand in brands %}
+        <article class="product-card">
+            <a href="{% url 'brand_detail' brand.pk %}">
+                {% if brand.logo %}
+                    <img src="{{ brand.logo.url }}" alt="{{ brand.name }}">
+                {% else %}
+                    <div style="height:140px;background:#eee;display:flex;align-items:center;justify-content:center;">Нет лого</div>
+                {% endif %}
+                <h3>{{ brand.name }}</h3>
+                {% if brand.country %}<p>{{ brand.country }}</p>{% endif %}
+            </a>
+        </article>
+        {% empty %}
+        <p>Нет записей</p>
+        {% endfor %}
+    </div>
+    <a class="back-link" href="{% url 'home' %}">← На главную</a>
+</div>
+{% endblock %}

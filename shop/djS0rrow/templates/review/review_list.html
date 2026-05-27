@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Отзывы — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Отзывы</h1>
+    <ul class="db-list">
+        {% for review in reviews %}
+        <li>
+            <a href="{% url 'review_detail' review.pk %}">{{ review.clothes.name }}</a>
+            — {{ review.rating }}/5 — {{ review.customer }}
+        </li>
+        {% empty %}
+        <li>Нет записей</li>
+        {% endfor %}
+    </ul>
+    <a class="back-link" href="{% url 'home' %}">← На главную</a>
+</div>
+{% endblock %}

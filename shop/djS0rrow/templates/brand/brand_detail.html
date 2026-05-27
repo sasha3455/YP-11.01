@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ brand.name }} — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>{{ brand.name }}</h1>
+    {% if brand.logo %}
+        <img class="detail-photo" src="{{ brand.logo.url }}" alt="{{ brand.name }}">
+    {% endif %}
+    <p>{{ brand.description }}</p>
+    {% if brand.country %}<p><strong>Страна:</strong> {{ brand.country }}</p>{% endif %}
+    <h2>Товары бренда</h2>
+    <ul class="db-list">
+        {% for item in brand.clothes_set.all %}
+        <li><a href="{% url 'product_detail' item.pk %}">{{ item.name }} — {{ item.price }} ₽</a></li>
+        {% empty %}
+        <li>Нет товаров</li>
+        {% endfor %}
+    </ul>
+    <a class="back-link" href="{% url 'brand_list' %}">← К списку брендов</a>
+</div>
+{% endblock %}

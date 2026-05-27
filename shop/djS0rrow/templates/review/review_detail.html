@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Отзыв — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Отзыв на «{{ review.clothes.name }}»</h1>
+    <p><strong>Товар:</strong> <a href="{% url 'product_detail' review.clothes.pk %}">{{ review.clothes.name }}</a></p>
+    <p><strong>Покупатель:</strong> <a href="{% url 'customer_detail' review.customer.pk %}">{{ review.customer }}</a></p>
+    <p><strong>Оценка:</strong> {{ review.rating }}/5</p>
+    <p>{{ review.text }}</p>
+    <p><strong>Дата:</strong> {{ review.created_at|date:"d.m.Y H:i" }}</p>
+    <a class="back-link" href="{% url 'review_list' %}">← К списку отзывов</a>
+</div>
+{% endblock %}
