@@ -1,6 +1,26 @@
 from django.urls import path
 
-from .views import BrandDetailView,BrandListView,CategoryDetailView,CategoryListView,ClothesDetailView,ClothesListView,CollectionDetailView, CollectionListView,  CustomerDetailView, CustomerListView,  OrderDetailView, OrderListView, ReviewDetailView,ReviewListView,  cart_view, home_view, info_view
+from .views import (
+    BrandDetailView,
+    BrandListView,
+    CategoryDetailView,
+    CategoryListView,
+    ClothesDetailView,
+    ClothesListView,
+    CollectionDetailView,
+    CollectionListView,
+    CustomerDetailView,
+    CustomerListView,
+    OrderDetailView,
+    OrderItemDetailView,
+    OrderItemListView,
+    OrderListView,
+    ReviewDetailView,
+    ReviewListView,
+    cart_view,
+    home_view,
+    info_view,
+)
 
 urlpatterns = [
     path('', home_view, name='home'),
@@ -18,6 +38,8 @@ urlpatterns = [
     path('customers/<int:pk>/', CustomerDetailView.as_view(), name='customer_detail'),
     path('orders/', OrderListView.as_view(), name='order_list'),
     path('orders/<int:pk>/', OrderDetailView.as_view(), name='order_detail'),
+    path('order-items/', OrderItemListView.as_view(), name='order_item_list'),
+    path('order-items/<int:pk>/', OrderItemDetailView.as_view(), name='order_item_detail'),
     path('reviews/', ReviewListView.as_view(), name='review_list'),
     path('reviews/<int:pk>/', ReviewDetailView.as_view(), name='review_detail'),
 ]

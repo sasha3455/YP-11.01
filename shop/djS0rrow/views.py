@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
-from .models import Brand, Category, Clothes, Collection, Customer, Order, Review
+from .models import Brand, Category, Clothes, Collection, Customer, Order, OrderItem, Review
 
 
 def home_view(request):
@@ -88,6 +88,19 @@ class OrderDetailView(DetailView):
     model = Order
     template_name = 'order/order_detail.html'
     context_object_name = 'order'
+
+
+class OrderItemListView(ListView):
+    model = OrderItem
+    template_name = 'orderitem/orderitem_list.html'
+    context_object_name = 'order_items'
+    queryset = OrderItem.objects.select_related('order', 'clothes', 'order__customer')
+
+
+class OrderItemDetailView(DetailView):
+    model = OrderItem
+    template_name = 'orderitem/orderitem_detail.html'
+    context_object_name = 'order_item'
 
 
 class ReviewListView(ListView):

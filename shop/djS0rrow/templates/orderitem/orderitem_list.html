@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Позиции заказа — Grailed{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Позиции заказа</h1>
+    <ul class="db-list">
+        {% for item in order_items %}
+        <li>
+            <a href="{% url 'order_item_detail' item.pk %}">
+                Заказ №{{ item.order.pk }} — {{ item.clothes.name }} × {{ item.quantity }}
+            </a>
+            — {{ item.price_at_order }} ₽
+        </li>
+        {% empty %}
+        <li>Нет записей</li>
+        {% endfor %}
+    </ul>
+    <a class="back-link" href="{% url 'home' %}">← На главную</a>
+</div>
+{% endblock %}

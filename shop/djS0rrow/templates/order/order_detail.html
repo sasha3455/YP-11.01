@@ -13,7 +13,7 @@
     <ul class="db-list">
         {% for item in order.items.all %}
         <li>
-            <a href="{% url 'product_detail' item.clothes.pk %}">{{ item.clothes.name }}</a>
+            <a href="{% url 'order_item_detail' item.pk %}">{{ item.clothes.name }}</a>
             × {{ item.quantity }} — {{ item.price_at_order }} ₽
         </li>
         {% empty %}
