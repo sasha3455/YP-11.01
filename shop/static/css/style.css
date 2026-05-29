@@ -1,0 +1,19 @@
+/* Base app styles */
+body {
+    background: #fafafa;
+    color: #111;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.iphone-pro {
+    max-width: 980px;
+    margin: 0 auto;
+    background: #fff;
+    min-height: 100vh;
+}
+
+.footer {
+    margin-top: 24px;
+    padding: 16px;
+    border-top: 1px solid #ddd;
+}

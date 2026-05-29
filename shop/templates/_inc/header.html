@@ -1,0 +1,17 @@
+<header class="site-header">
+        <nav class="nav-row" aria-label="Основные разделы">
+            <a href="{% url 'home' %}">Главная</a>
+            <a href="{% url 'info_view' %}">О компании</a>
+            <a href="{% url 'product_list' %}">Товары</a>
+            <a href="{% url 'cart_view' %}">Корзина</a>
+        </nav>
+        <nav class="nav-row" aria-label="Справочники">
+            <a href="{% url 'category_list' %}">Категории</a>
+            <a href="{% url 'collection_list' %}">Коллекции</a>
+            <a href="{% url 'brand_list' %}">Бренды</a>
+            <a href="{% url 'customer_list' %}">Покупатели</a>
+            <a href="{% url 'order_list' %}">Заказы</a>
+            <a href="{% url 'order_item_list' %}">Позиции заказа</a>
+            <a href="{% url 'review_list' %}">Отзывы</a>
+        </nav>
+    </header>
