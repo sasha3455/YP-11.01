@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    {% include '_inc/head_meta.html' %}
+    {% include '_inc/_head_meta.html' %}
     <title>{% block title %}Grailed{% endblock %}</title>
     {% block styles %}
     <style>
@@ -48,7 +48,6 @@
         }
         .back-link { display: inline-block; margin-top: 16px; }
 
-        (главная, о компании, корзина) */
         .static-page { max-width: 520px; margin: 0 auto; padding: 8px 16px 80px; line-height: 1.5; }
         .static-page h1 { font-size: 1.5rem; margin: 0 0 12px; letter-spacing: 0.02em; }
         .static-page h2 { font-size: 1.1rem; margin: 24px 0 8px; }
@@ -127,13 +126,13 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-<div class="iphone-pro">
-    {% include '_inc/header.html' %}
+<div>
+    {% include '_inc/_header.html' %}
 
     {% block content %}{% endblock %}
 
-    {% include '_inc/footer.html' %}
+    {% include '_inc/_footer.html' %}
 </div>
-{% include '_inc/scripts.html' %}
+{% include '_inc/_scripts.html' %}
 </body>
 </html>
