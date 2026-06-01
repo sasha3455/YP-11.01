@@ -1,6 +1,11 @@
 from django.db import models
+from django.core.validators import RegexValidator
 
 MAX_LENNGHT = 255
+SIZE_VALIDATOR = RegexValidator(
+    regex=r'^(XS|S|M|L|XL|XXL|[0-9]{2,3})$',
+    message='Размер должен быть XS, S, M, L, XL, XXL или числом из 2-3 цифр.',
+)
 
 
 class Category(models.Model):
@@ -51,7 +56,7 @@ class Clothes(models.Model):
     name = models.CharField(max_length=MAX_LENNGHT, verbose_name='Наименование одежды')
     description = models.TextField(null=True, blank=True, verbose_name='Описание одежды')
     price = models.FloatField(verbose_name='Цена')
-    size = models.PositiveIntegerField(default=36, verbose_name='Размер')
+    size = models.CharField(max_length=10, default='36', verbose_name='Размер', validators=[SIZE_VALIDATOR])
     color = models.CharField(max_length=MAX_LENNGHT, verbose_name='Цвет')
     photo = models.ImageField(
         upload_to='image/%Y/%m/%d',

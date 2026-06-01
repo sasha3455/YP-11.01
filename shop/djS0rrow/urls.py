@@ -46,6 +46,7 @@ from .views import (
     info_view,
 )
 
+
 urlpatterns = [
     path('', home_view, name='home'),
     path('info/', info_view, name='info_view'),
@@ -91,3 +92,4 @@ urlpatterns = [
     path('reviews/<int:pk>/edit/', ReviewUpdateView.as_view(), name='review_edit'),
     path('reviews/<int:pk>/delete/', ReviewDeleteView.as_view(), name='review_delete'),
 ]
+
