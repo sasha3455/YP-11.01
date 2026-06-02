@@ -5,20 +5,24 @@
 {% block content %}
 <div class="page-content">
     <h1>Заказы</h1>
-    <p>
-        <a href="{% url 'order_add' %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
-            + Создать заказ
-        </a>
-    </p>
+    {% if user.is_staff %}
+        <p>
+            <a href="{% url 'order_add' %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
+                + Создать заказ
+            </a>
+        </p>
+    {% endif %}
     <ul class="db-list">
         {% for order in orders %}
         <li>
             <a href="{% url 'order_detail' order.pk %}">Заказ №{{ order.pk }}</a>
             — {{ order.customer }} — {{ order.total_amount }} ₽ — {{ order.get_status_display }}
-            <span style="margin-left:10px;">
-                <a href="{% url 'order_edit' order.pk %}">Редактировать</a>
-                <a href="{% url 'order_delete' order.pk %}" style="margin-left:10px;color:#b00020;">Удалить</a>
-            </span>
+            {% if user.is_staff %}
+                <span style="margin-left:10px;">
+                    <a href="{% url 'order_edit' order.pk %}">Редактировать</a>
+                    <a href="{% url 'order_delete' order.pk %}" style="margin-left:10px;color:#b00020;">Удалить</a>
+                </span>
+            {% endif %}
         </li>
         {% empty %}
         <li>Нет записей</li>

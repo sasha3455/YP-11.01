@@ -6,11 +6,13 @@
 <div class="page-content">
     <h1>Доступная одежда</h1>
 
-    <p>
-        <a href="{% url 'product_add' %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
-            + Добавить товар
-        </a>
-    </p>
+    {% if user.is_staff %}
+        <p>
+            <a href="{% url 'product_add' %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
+                + Добавить товар
+            </a>
+        </p>
+    {% endif %}
 
     <div class="product-cards">
         {% for item in clothes %}
@@ -26,10 +28,16 @@
                 <p>Размер: {{ item.size }} · {{ item.color }}</p>
                 {% if item.brand %}<p>{{ item.brand.name }}</p>{% endif %}
             </a>
-            <div style="margin-top:8px;display:flex;gap:10px;">
-                <a href="{% url 'product_edit' item.pk %}">Редактировать</a>
-                <a href="{% url 'product_delete' item.pk %}" style="color:#b00020;">Удалить</a>
-            </div>
+            <form method="post" action="{% url 'cart_add' item.pk %}" style="margin-top:8px;">
+                {% csrf_token %}
+                <button type="submit">В корзину</button>
+            </form>
+            {% if user.is_staff %}
+                <div class="product-actions">
+                    <a href="{% url 'product_edit' item.pk %}">Редактировать</a>
+                    <a href="{% url 'product_delete' item.pk %}" style="color:#b00020;">Удалить</a>
+                </div>
+            {% endif %}
         </article>
         {% empty %}
         <p>Пока нет товаров в каталоге.</p>

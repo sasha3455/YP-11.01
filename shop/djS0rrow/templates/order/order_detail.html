@@ -5,15 +5,19 @@
 {% block content %}
 <div class="page-content">
     <h1>Заказ №{{ order.pk }}</h1>
-    <p style="display:flex;gap:10px;flex-wrap:wrap;">
-        <a href="{% url 'order_edit' order.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
-            Редактировать
-        </a>
-        <a href="{% url 'order_delete' order.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #b00020;background:#b00020;color:#fff;border-radius:6px;text-decoration:none;">
-            Удалить
-        </a>
-    </p>
-    <p><strong>Покупатель:</strong> <a href="{% url 'customer_detail' order.customer.pk %}">{{ order.customer }}</a></p>
+    {% if user.is_staff %}
+        <p style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="{% url 'order_edit' order.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
+                Редактировать
+            </a>
+            <a href="{% url 'order_delete' order.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #b00020;background:#b00020;color:#fff;border-radius:6px;text-decoration:none;">
+                Удалить
+            </a>
+        </p>
+        <p><strong>Покупатель:</strong> <a href="{% url 'customer_detail' order.customer.pk %}">{{ order.customer }}</a></p>
+    {% else %}
+        <p><strong>Покупатель:</strong> {{ order.customer }}</p>
+    {% endif %}
     <p><strong>Дата:</strong> {{ order.order_date|date:"d.m.Y H:i" }}</p>
     <p><strong>Статус:</strong> {{ order.get_status_display }}</p>
     <p><strong>Сумма:</strong> {{ order.total_amount }} ₽</p>

@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
+from django.contrib.auth.models import User
 
 MAX_LENNGHT = 255
 SIZE_VALIDATOR = RegexValidator(
@@ -85,6 +86,13 @@ class Clothes(models.Model):
 
 
 class Customer(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name='Пользователь',
+    )
     first_name = models.CharField(max_length=100, verbose_name='Имя')
     last_name = models.CharField(max_length=100, verbose_name='Фамилия')
     email = models.EmailField(verbose_name='Email')
@@ -106,6 +114,14 @@ class Order(models.Model):
         ('delivered', 'Доставлен'),
         ('cancelled', 'Отменён'),
     ]
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='orders',
+        verbose_name='Пользователь',
+    )
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT, verbose_name='Покупатель')
     order_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата заказа')
     status = models.CharField(

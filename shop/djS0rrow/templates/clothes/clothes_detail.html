@@ -6,13 +6,21 @@
 <div class="page-content">
     <h1>{{ clothes.name }}</h1>
 
-    <p style="display:flex;gap:10px;flex-wrap:wrap;">
-        <a href="{% url 'product_edit' clothes.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
-            Редактировать
-        </a>
-        <a href="{% url 'product_delete' clothes.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #b00020;background:#b00020;color:#fff;border-radius:6px;text-decoration:none;">
-            Удалить
-        </a>
+    <p style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <form method="post" action="{% url 'cart_add' clothes.pk %}" style="margin:0;">
+            {% csrf_token %}
+            <button type="submit" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
+                Добавить в корзину
+            </button>
+        </form>
+        {% if user.is_staff %}
+            <a href="{% url 'product_edit' clothes.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
+                Редактировать
+            </a>
+            <a href="{% url 'product_delete' clothes.pk %}" style="display:inline-block;padding:10px 14px;border:1px solid #b00020;background:#b00020;color:#fff;border-radius:6px;text-decoration:none;">
+                Удалить
+            </a>
+        {% endif %}
     </p>
 
     {% if clothes.photo %}

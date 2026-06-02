@@ -9,31 +9,46 @@
     <p class="lead">Здесь отображаются выбранные товары перед оформлением заказа.</p>
 
     <div class="cart-demo info-card">
-        <div class="cart-row">
-            <div>
-                <p class="item-name">Basic Double Hoodie</p>
-                <p class="item-meta">Продавец: Dan4DoTheShit · Размер: XL</p>
+        {% for item in cart_items %}
+            <div class="cart-row">
+                <div>
+                    <p class="item-name">{{ item.clothes.name }}</p>
+                    <p class="item-meta">Размер: {{ item.clothes.size }} · Кол-во: {{ item.quantity }}</p>
+                </div>
+                <div>
+                    <span class="item-price">{{ item.item_total }} ₽</span>
+                    <form method="post" action="{% url 'cart_remove' item.clothes.pk %}" style="margin-top:6px;">
+                        {% csrf_token %}
+                        <button type="submit">Удалить</button>
+                    </form>
+                </div>
             </div>
-            <span class="item-price">84 $</span>
-        </div>
-        <div class="cart-row">
-            <div>
-                <p class="item-name">Shorty Cargo Pants</p>
-                <p class="item-meta">Продавец: 7.ohn.doe.lab · Размер: ONE SIZE</p>
-            </div>
-            <span class="item-price">47 $</span>
-        </div>
+        {% empty %}
+            <p>Корзина пока пуста.</p>
+        {% endfor %}
 
         <div class="cart-total">
-            <span>Итого (2 товара)</span>
-            <span>131 $</span>
+            <span>Итого ({{ cart_items|length }} товара)</span>
+            <span>{{ total }} ₽</span>
         </div>
 
-        <button type="button" class="checkout-btn" disabled>Оформить заказ</button>
-
-        <p class="demo-note">
-            Это демонстрационная вёрстка корзины. Реальные товары из базы данных на этой странице появятся на следующем этапе задания.
-        </p>
+        {% if cart_items %}
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'create_order_from_cart' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="checkout-btn">Оформить заказ</button>
+                </form>
+            {% else %}
+                <p class="demo-note">
+                    Для оформления заказа необходимо <a href="{% url 'login' %}">войти</a> или
+                    <a href="{% url 'register' %}">зарегистрироваться</a>.
+                </p>
+            {% endif %}
+            <form method="post" action="{% url 'cart_clear' %}" style="margin-top:10px;">
+                {% csrf_token %}
+                <button type="submit">Очистить корзину</button>
+            </form>
+        {% endif %}
     </div>
 
     <div class="quick-links">
