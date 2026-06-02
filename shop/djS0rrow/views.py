@@ -8,8 +8,9 @@ from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
+from .cart import Cart
 from .models import Brand, Category, Clothes, Collection, Customer, Order, OrderItem, Review
-from .forms import ClothesForm, LoginForm, RegisterForm
+from .forms import CartAddProductForm, ClothesForm, LoginForm, RegisterForm
 
 
 class StaffRequiredMixin(UserPassesTestMixin):
@@ -30,32 +31,19 @@ def info_view(request):
 
 
 def cart_view(request):
-    cart = request.session.get('cart', {})
-    clothes_ids = [int(item_id) for item_id in cart.keys()]
-    clothes_map = Clothes.objects.in_bulk(clothes_ids)
+    cart = Cart(request)
     cart_items = []
-    total = 0
-
-    for item_id, quantity in cart.items():
-        clothes = clothes_map.get(int(item_id))
-        if not clothes:
-            continue
-        item_total = clothes.price * quantity
-        total += item_total
-        cart_items.append(
-            {
-                'clothes': clothes,
-                'quantity': quantity,
-                'item_total': item_total,
-            }
+    for item in cart:
+        item['update_quantity_form'] = CartAddProductForm(
+            initial={'quantity': item['quantity'], 'override_quantity': True}
         )
-
+        cart_items.append(item)
     return render(
         request,
         'cart.html',
         {
             'cart_items': cart_items,
-            'total': total,
+            'total': cart.get_total_price(),
         },
     )
 
@@ -63,26 +51,47 @@ def cart_view(request):
 @require_POST
 def add_to_cart_view(request, pk):
     clothes = get_object_or_404(Clothes, pk=pk, is_exists=True)
-    cart = request.session.get('cart', {})
-    item_id = str(clothes.pk)
-    cart[item_id] = cart.get(item_id, 0) + 1
-    request.session['cart'] = cart
+    cart = Cart(request)
+    form = CartAddProductForm(request.POST)
+    if form.is_valid():
+        cart.add(
+            clothes=clothes,
+            quantity=form.cleaned_data['quantity'],
+            override_quantity=form.cleaned_data['override_quantity'],
+        )
+    else:
+        cart.add(clothes=clothes, quantity=1)
     messages.success(request, f'Товар "{clothes.name}" добавлен в корзину.')
     return redirect(request.META.get('HTTP_REFERER', 'product_list'))
 
 
 @require_POST
+def update_cart_view(request, pk):
+    clothes = get_object_or_404(Clothes, pk=pk, is_exists=True)
+    cart = Cart(request)
+    form = CartAddProductForm(request.POST)
+    if form.is_valid():
+        cart.add(
+            clothes=clothes,
+            quantity=form.cleaned_data['quantity'],
+            override_quantity=True,
+        )
+        messages.success(request, 'Количество товара в корзине обновлено.')
+    return redirect('cart_view')
+
+
+@require_POST
 def remove_from_cart_view(request, pk):
-    cart = request.session.get('cart', {})
-    cart.pop(str(pk), None)
-    request.session['cart'] = cart
+    clothes = get_object_or_404(Clothes, pk=pk)
+    cart = Cart(request)
+    cart.remove(clothes)
     messages.success(request, 'Товар удален из корзины.')
     return redirect('cart_view')
 
 
 @require_POST
 def clear_cart_view(request):
-    request.session['cart'] = {}
+    Cart(request).clear()
     messages.success(request, 'Корзина очищена.')
     return redirect('cart_view')
 
@@ -91,8 +100,8 @@ def clear_cart_view(request):
 @require_POST
 @transaction.atomic
 def create_order_from_cart_view(request):
-    cart = request.session.get('cart', {})
-    if not cart:
+    cart = Cart(request)
+    if len(cart) == 0:
         messages.error(request, 'Корзина пуста.')
         return redirect('cart_view')
 
@@ -106,15 +115,13 @@ def create_order_from_cart_view(request):
         },
     )
 
-    clothes_map = Clothes.objects.in_bulk([int(item_id) for item_id in cart.keys()])
     order = Order.objects.create(user=request.user, customer=customer, total_amount=0)
     total = 0
 
-    for item_id, quantity in cart.items():
-        clothes = clothes_map.get(int(item_id))
-        if not clothes:
-            continue
-        item_total = clothes.price * quantity
+    for item in cart:
+        clothes = item['clothes']
+        quantity = item['quantity']
+        item_total = item['item_total']
         total += item_total
         OrderItem.objects.create(
             order=order,
@@ -130,7 +137,7 @@ def create_order_from_cart_view(request):
 
     order.total_amount = total
     order.save(update_fields=['total_amount'])
-    request.session['cart'] = {}
+    cart.clear()
     messages.success(request, f'Заказ №{order.pk} успешно создан.')
     return redirect('order_detail', pk=order.pk)
 
@@ -174,11 +181,21 @@ class ClothesListView(ListView):
     context_object_name = 'clothes'
     queryset = Clothes.objects.select_related('category', 'brand').filter(is_exists=True)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart_product_form'] = CartAddProductForm(initial={'quantity': 1})
+        return context
+
 
 class ClothesDetailView(DetailView):
     model = Clothes
     template_name = 'clothes/clothes_detail.html'
     context_object_name = 'clothes'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart_product_form'] = CartAddProductForm(initial={'quantity': 1})
+        return context
 
 
 class ClothesCreateView(LoginRequiredMixin, StaffRequiredMixin, CreateView):

@@ -17,6 +17,12 @@
                 </div>
                 <div>
                     <span class="item-price">{{ item.item_total }} ₽</span>
+                    <form method="post" action="{% url 'cart_update' item.clothes.pk %}" style="margin-top:6px;">
+                        {% csrf_token %}
+                        {{ item.update_quantity_form.quantity }}
+                        {{ item.update_quantity_form.override_quantity }}
+                        <button type="submit">Обновить</button>
+                    </form>
                     <form method="post" action="{% url 'cart_remove' item.clothes.pk %}" style="margin-top:6px;">
                         {% csrf_token %}
                         <button type="submit">Удалить</button>

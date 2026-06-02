@@ -9,6 +9,8 @@
     <p style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
         <form method="post" action="{% url 'cart_add' clothes.pk %}" style="margin:0;">
             {% csrf_token %}
+            {{ cart_product_form.quantity }}
+            {{ cart_product_form.override_quantity }}
             <button type="submit" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
                 Добавить в корзину
             </button>

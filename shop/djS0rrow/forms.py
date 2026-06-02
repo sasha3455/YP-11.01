@@ -54,3 +54,12 @@ class RegisterForm(UserCreationForm):
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Логин')
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+
+
+class CartAddProductForm(forms.Form):
+    quantity = forms.IntegerField(min_value=1, max_value=100, initial=1, label='Количество')
+    override_quantity = forms.BooleanField(
+        required=False,
+        initial=False,
+        widget=forms.HiddenInput,
+    )

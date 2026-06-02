@@ -30,6 +30,8 @@
             </a>
             <form method="post" action="{% url 'cart_add' item.pk %}" style="margin-top:8px;">
                 {% csrf_token %}
+                {{ cart_product_form.quantity }}
+                {{ cart_product_form.override_quantity }}
                 <button type="submit">В корзину</button>
             </form>
             {% if user.is_staff %}
