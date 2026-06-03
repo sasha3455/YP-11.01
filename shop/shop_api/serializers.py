@@ -6,46 +6,46 @@ from djS0rrow.models import Brand, Category, Clothes, Collection, Customer, Orde
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ['id', 'name', 'description']
 
 
 class CollectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Collection
-        fields = '__all__'
+        fields = ['id', 'name', 'description', 'season']
 
 
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brand
-        fields = '__all__'
+        fields = ['id', 'name', 'description', 'country', 'logo']
 
 
 class ClothesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Clothes
-        fields = '__all__'
+        fields = ['id', 'name', 'description', 'price', 'size', 'color', 'photo', 'create_date', 'is_exists', 'category', 'collection', 'brand']
 
 
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = '__all__'
+        fields = ['id', 'user', 'first_name', 'last_name', 'email', 'phone']
 
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = ['id', 'user', 'customer', 'order_date', 'status', 'total_amount']
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
-        fields = '__all__'
+        fields = ['id', 'order', 'clothes', 'quantity', 'price_at_order']
 
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = '__all__'
+        fields = ['id', 'clothes', 'customer', 'rating', 'text', 'created_at']
