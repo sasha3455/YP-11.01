@@ -13,8 +13,10 @@
             {% if user.is_authenticated %}
                 <a href="{% url 'order_list' %}">Мои заказы</a>
             {% endif %}
-            {% if user.is_staff %}
+            {% if perms.djS0rrow.view_customer %}
                 <a href="{% url 'customer_list' %}">Покупатели</a>
+            {% endif %}
+            {% if perms.djS0rrow.view_orderitem %}
                 <a href="{% url 'order_item_list' %}">Позиции заказа</a>
             {% endif %}
         </nav>

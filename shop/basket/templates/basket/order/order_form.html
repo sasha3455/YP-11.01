@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Оформление заказа — Grailed{% endblock %}
+
+{% block content %}
+<section class="page-content static-page">
+    <p class="tagline">Order</p>
+    <h1>Оформление заказа</h1>
+    <p class="lead">Подтвердите состав корзины и создайте заказ.</p>
+
+    <div class="info-card">
+        {% for item in cart_items %}
+            <div class="cart-row">
+                <div>
+                    <p class="item-name">{{ item.clothes.name }}</p>
+                    <p class="item-meta">Количество: {{ item.quantity }}</p>
+                </div>
+                <div class="item-price">{{ item.item_total }} ₽</div>
+            </div>
+        {% endfor %}
+
+        <div class="cart-total">
+            <span>Итого</span>
+            <span>{{ total }} ₽</span>
+        </div>
+
+        <form method="post" style="margin-top:16px;">
+            {% csrf_token %}
+            {{ form.confirm }}
+            <button type="submit" class="checkout-btn">Создать заказ</button>
+        </form>
+    </div>
+
+    <div class="quick-links">
+        <a href="{% url 'cart_view' %}">Вернуться в корзину</a>
+    </div>
+</section>
+{% endblock %}

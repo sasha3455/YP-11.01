@@ -6,7 +6,7 @@
 <div class="page-content">
     <h1>Доступная одежда</h1>
 
-    {% if user.is_staff %}
+    {% if perms.djS0rrow.add_clothes %}
         <p>
             <a href="{% url 'product_add' %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
                 + Добавить товар
@@ -34,10 +34,14 @@
                 {{ cart_product_form.override_quantity }}
                 <button type="submit">В корзину</button>
             </form>
-            {% if user.is_staff %}
+            {% if perms.djS0rrow.change_clothes or perms.djS0rrow.delete_clothes %}
                 <div class="product-actions">
-                    <a href="{% url 'product_edit' item.pk %}">Редактировать</a>
-                    <a href="{% url 'product_delete' item.pk %}" style="color:#b00020;">Удалить</a>
+                    {% if perms.djS0rrow.change_clothes %}
+                        <a href="{% url 'product_edit' item.pk %}">Редактировать</a>
+                    {% endif %}
+                    {% if perms.djS0rrow.delete_clothes %}
+                        <a href="{% url 'product_delete' item.pk %}" style="color:#b00020;">Удалить</a>
+                    {% endif %}
                 </div>
             {% endif %}
         </article>

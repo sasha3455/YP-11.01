@@ -5,11 +5,13 @@
 {% block content %}
 <div class="page-content">
     <h1>Бренды</h1>
-    <p>
-        <a href="{% url 'brand_add' %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
-            + Добавить бренд
-        </a>
-    </p>
+    {% if perms.djS0rrow.add_brand %}
+        <p>
+            <a href="{% url 'brand_add' %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
+                + Добавить бренд
+            </a>
+        </p>
+    {% endif %}
     <div class="product-cards">
         {% for brand in brands %}
         <article class="product-card">
@@ -22,10 +24,16 @@
                 <h3>{{ brand.name }}</h3>
                 {% if brand.country %}<p>{{ brand.country }}</p>{% endif %}
             </a>
-            <div style="margin-top:8px;display:flex;gap:10px;">
-                <a href="{% url 'brand_edit' brand.pk %}">Редактировать</a>
-                <a href="{% url 'brand_delete' brand.pk %}" style="color:#b00020;">Удалить</a>
-            </div>
+            {% if perms.djS0rrow.change_brand or perms.djS0rrow.delete_brand %}
+                <div style="margin-top:8px;display:flex;gap:10px;">
+                    {% if perms.djS0rrow.change_brand %}
+                        <a href="{% url 'brand_edit' brand.pk %}">Редактировать</a>
+                    {% endif %}
+                    {% if perms.djS0rrow.delete_brand %}
+                        <a href="{% url 'brand_delete' brand.pk %}" style="color:#b00020;">Удалить</a>
+                    {% endif %}
+                </div>
+            {% endif %}
         </article>
         {% empty %}
         <p>Нет записей</p>

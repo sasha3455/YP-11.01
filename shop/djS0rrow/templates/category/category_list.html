@@ -5,21 +5,27 @@
 {% block content %}
 <div class="page-content">
     <h1>Категории</h1>
-    <p>
-        <a href="{% url 'category_add' %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
-            + Добавить категорию
-        </a>
-    </p>
+    {% if perms.djS0rrow.add_category %}
+        <p>
+            <a href="{% url 'category_add' %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
+                + Добавить категорию
+            </a>
+        </p>
+    {% endif %}
     <ul class="db-list">
         {% for category in categories %}
         <li>
             <a href="{% url 'category_detail' category.pk %}">{{ category.name }}</a>
-            <span style="margin-left:10px;">
-                <a href="{% url 'category_edit' category.pk %}">Редактировать</a>
-                {% if not category.clothes_set.exists %}
-                    <a href="{% url 'category_delete' category.pk %}" style="margin-left:10px;color:#b00020;">Удалить</a>
-                {% endif %}
-            </span>
+            {% if perms.djS0rrow.change_category or perms.djS0rrow.delete_category %}
+                <span style="margin-left:10px;">
+                    {% if perms.djS0rrow.change_category %}
+                        <a href="{% url 'category_edit' category.pk %}">Редактировать</a>
+                    {% endif %}
+                    {% if perms.djS0rrow.delete_category and not category.clothes_set.exists %}
+                        <a href="{% url 'category_delete' category.pk %}" style="margin-left:10px;color:#b00020;">Удалить</a>
+                    {% endif %}
+                </span>
+            {% endif %}
         </li>
         {% empty %}
         <li>Нет записей</li>

@@ -5,7 +5,7 @@
 {% block content %}
 <div class="page-content">
     <h1>Заказы</h1>
-    {% if user.is_staff %}
+    {% if perms.djS0rrow.add_order %}
         <p>
             <a href="{% url 'order_add' %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
                 + Создать заказ
@@ -17,10 +17,14 @@
         <li>
             <a href="{% url 'order_detail' order.pk %}">Заказ №{{ order.pk }}</a>
             — {{ order.customer }} — {{ order.total_amount }} ₽ — {{ order.get_status_display }}
-            {% if user.is_staff %}
+            {% if perms.djS0rrow.change_order or perms.djS0rrow.delete_order %}
                 <span style="margin-left:10px;">
-                    <a href="{% url 'order_edit' order.pk %}">Редактировать</a>
-                    <a href="{% url 'order_delete' order.pk %}" style="margin-left:10px;color:#b00020;">Удалить</a>
+                    {% if perms.djS0rrow.change_order %}
+                        <a href="{% url 'order_edit' order.pk %}">Редактировать</a>
+                    {% endif %}
+                    {% if perms.djS0rrow.delete_order %}
+                        <a href="{% url 'order_delete' order.pk %}" style="margin-left:10px;color:#b00020;">Удалить</a>
+                    {% endif %}
                 </span>
             {% endif %}
         </li>

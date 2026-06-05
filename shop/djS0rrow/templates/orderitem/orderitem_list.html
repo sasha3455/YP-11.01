@@ -5,11 +5,13 @@
 {% block content %}
 <div class="page-content">
     <h1>Позиции заказа</h1>
-    <p>
-        <a href="{% url 'order_item_add' %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
-            + Добавить позицию
-        </a>
-    </p>
+    {% if perms.djS0rrow.add_orderitem %}
+        <p>
+            <a href="{% url 'order_item_add' %}" style="display:inline-block;padding:10px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:6px;text-decoration:none;">
+                + Добавить позицию
+            </a>
+        </p>
+    {% endif %}
     <ul class="db-list">
         {% for item in order_items %}
         <li>
@@ -17,10 +19,16 @@
                 Заказ №{{ item.order.pk }} — {{ item.clothes.name }} × {{ item.quantity }}
             </a>
             — {{ item.price_at_order }} ₽
-            <span style="margin-left:10px;">
-                <a href="{% url 'order_item_edit' item.pk %}">Редактировать</a>
-                <a href="{% url 'order_item_delete' item.pk %}" style="margin-left:10px;color:#b00020;">Удалить</a>
-            </span>
+            {% if perms.djS0rrow.change_orderitem or perms.djS0rrow.delete_orderitem %}
+                <span style="margin-left:10px;">
+                    {% if perms.djS0rrow.change_orderitem %}
+                        <a href="{% url 'order_item_edit' item.pk %}">Редактировать</a>
+                    {% endif %}
+                    {% if perms.djS0rrow.delete_orderitem %}
+                        <a href="{% url 'order_item_delete' item.pk %}" style="margin-left:10px;color:#b00020;">Удалить</a>
+                    {% endif %}
+                </span>
+            {% endif %}
         </li>
         {% empty %}
         <li>Нет записей</li>
